@@ -6,13 +6,14 @@ import Home from "./routes/Home";
 import Signin from "./routes/Signin";
 import Signup from "./routes/Signup";
 import Account from "./routes/Account";
+import CoinPage from "./routes/CoinPage";
 import axios from "axios";
 
 function App() {
   const [coins, setCoins] = useState([]);
 
   const url =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=15&page=1&sparkline=true";
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true";
   useEffect(() => {
     axios.get(url).then((response) => {
       setCoins(response.data);
@@ -28,6 +29,9 @@ function App() {
         <Route path="/" element={<Signin />} />
         <Route path="/" element={<Signup />} />
         <Route path="/" element={<Account />} />
+        <Route path="/coin/:coinId" element={<CoinPage />}>
+          <Route path=":coinId" />
+        </Route>
       </Routes>
     </ThemeProvider>
   );
