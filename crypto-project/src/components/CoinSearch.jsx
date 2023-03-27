@@ -3,11 +3,10 @@ import CoinItem from "./CoinItem";
 
 const CoinSearch = ({ coins }) => {
   const [searchText, setSearchText] = useState("");
-  console.log(coins);
   return (
     <div className="rounded-div my-4">
       <div className="flex flex-col md:flex-row justify-between pt-4 pb-6 text-center md:text-right">
-        <h1 className="text-2xl font-bold my-2 ml-2">Search Crypto</h1>
+        <h1 className="text-2xl font-bold my-2 ml-2">Top coins</h1>
         <form>
           <input
             onChange={(e) => setSearchText(e.target.value)}
@@ -23,7 +22,7 @@ const CoinSearch = ({ coins }) => {
           <tr className="border-b">
             <th></th>
             <th className="px-4">#</th>
-            <th className="text-left">Coin</th>
+            <th className="text-left">Name</th>
             <th></th>
             <th>Price</th>
             <th>24h</th>

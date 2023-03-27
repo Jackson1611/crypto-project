@@ -3,9 +3,6 @@ import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
-import Signin from "./routes/Signin";
-import Signup from "./routes/Signup";
-import Account from "./routes/Account";
 import CoinPage from "./routes/CoinPage";
 import axios from "axios";
 
@@ -26,9 +23,6 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home coins={coins} />} />
-        <Route path="/" element={<Signin />} />
-        <Route path="/" element={<Signup />} />
-        <Route path="/" element={<Account />} />
         <Route path="/coin/:coinId" element={<CoinPage />}>
           <Route path=":coinId" />
         </Route>
