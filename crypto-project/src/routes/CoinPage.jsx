@@ -18,12 +18,12 @@ const CoinPage = () => {
   }, [url]);
 
   return (
-    <div className="rounded-div my-12 py-8">
+    <div className="rounded-div my-12 py-8 font-bold">
       <div className="flex py-8">
         <img className="w-20 mr-8" src={coin.image?.large} alt="/" />
         <div>
-          <p className="text-3xl font-bold">{coin?.name} price</p>
-          <p>({coin.symbol?.toUpperCase()} / USD)</p>
+          <p className="text-3xl font-bold">{coin?.name}</p>
+          <p>({coin.symbol?.toUpperCase()} / EUR)</p>
         </div>
       </div>
 
@@ -32,14 +32,14 @@ const CoinPage = () => {
           <div className="flex justify-between">
             {coin.market_data?.current_price ? (
               <p className="text-3xl font-bold">
-                ${coin.market_data.current_price.usd.toLocaleString()}
+                €{coin.market_data.current_price.eur.toLocaleString()}
               </p>
             ) : null}
             <p>7 Day</p>
           </div>
           <div>
             <Sparklines data={coin.market_data?.sparkline_7d.price}>
-              <SparklinesLine color="teal" />
+              <SparklinesLine color="#6666ff" />
             </Sparklines>
           </div>
           <div className="flex justify-between py-4">
@@ -142,9 +142,10 @@ const CoinPage = () => {
       </div>
 
       {/* Description */}
-      <div className="py-4">
+      <div className="py-4 ">
         <p className="text-xl font-bold">About {coin.name}</p>
         <p
+          className="font-semibold  text-gray-500"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(
               coin.description ? coin.description.en : ""
