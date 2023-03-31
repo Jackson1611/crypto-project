@@ -13,7 +13,9 @@ const CoinSearch = ({ coins }) => {
   return (
     <div className="rounded-div my-4">
       <div className="flex flex-col md:flex-row justify-between pt-4 pb-6 text-center md:text-right">
-        <h1 className="text-2xl font-bold my-2 ml-2">Top coins</h1>
+        <h1 className="text-2xl font-bold my-2 ml-2 hidden md:table-cell">
+          Top coins
+        </h1>
         <form className="relative">
           <input
             onChange={(e) => setSearchText(e.target.value)}
@@ -28,13 +30,13 @@ const CoinSearch = ({ coins }) => {
       <table className="w-full border-collapse text-center">
         <thead>
           <tr className="border-b text-lg ">
-            <th></th>
-            <th className="px-4">#</th>
+            <th className="hidden md:table-cell"></th>
+            <th className="px-4 hidden md:table-cell">#</th>
             <th className="text-left">Name</th>
             <th>Price</th>
             <th>Change</th>
             <th className="hidden md:table-cell">24h Volume</th>
-            <th className="hidden sm:table-cell">Market cap</th>
+            <th className="hidden md:table-cell">Market cap</th>
             <th>7 days chart</th>
           </tr>
         </thead>

@@ -6,10 +6,10 @@ import { Sparklines, SparklinesLine } from "react-sparklines";
 const CoinItem = ({ coin }) => {
   return (
     <tr className="h-[80px] border-b overflow-hidden">
-      <td>
+      <td className="hidden md:table-cell">
         <AiOutlineStar className="ml-2" />
       </td>
-      <td>{coin.market_cap_rank}</td>
+      <td className="hidden md:table-cell">{coin.market_cap_rank}</td>
       <td>
         <Link to={`/coin/${coin.id}`}>
           <div className="flex items-center">
@@ -21,7 +21,7 @@ const CoinItem = ({ coin }) => {
             <p className="text-lg hidde sm:table-cell font-semi-bold">
               {coin.name}
             </p>
-            <p className="text-lg text-secondary ml-5">
+            <p className="text-lg text-secondary ml-5 hidden md:table-cell">
               {coin.symbol.toUpperCase()}
             </p>
           </div>
@@ -39,10 +39,10 @@ const CoinItem = ({ coin }) => {
           </p>
         )}
       </td>
-      <td className="w-[180px] hidde sm:table-cell ">
+      <td className="w-[180px] hidden md:table-cell ">
         €{coin.total_volume.toLocaleString()}
       </td>
-      <td className="w-[180px] hidde sm:table-cell">
+      <td className="w-[180px] hidden md:table-cell">
         €{coin.market_cap.toLocaleString()}
       </td>
       <td>

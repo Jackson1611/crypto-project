@@ -29,3 +29,25 @@
   --color-bg-input: #edf2f7;
   --color-bg-button: #2b6cb0;
 }
+/* Import the 'Kanit' font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap");
+
+/* Apply the 'Kanit' font to the body element */
+body {
+  font-family: "Kanit", sans-serif;
+}
+
+/* Apply the 'Kanit' font to all headings */
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Kanit", sans-serif;
+}
+
+/* Apply the 'Kanit' font to all paragraphs */
+p {
+  font-family: "Kanit", sans-serif;
+}
