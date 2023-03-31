@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CoinItem from "./CoinItem";
 import { TfiSearch } from "react-icons/tfi";
 
 const CoinSearch = ({ coins }) => {
   const [searchText, setSearchText] = useState("");
   const [numToShow, setNumToShow] = useState(10);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(!coins);
+  }, [coins]);
 
   const handleLoadMore = () => {
     setNumToShow(numToShow + 10);
@@ -25,39 +30,43 @@ const CoinSearch = ({ coins }) => {
           />
           <TfiSearch className="absolute left-3 top-3 text-secondary" />
         </form>
-      </div>
-
-      <table className="w-full border-collapse text-center">
-        <thead>
-          <tr className=" text-xl font-sans">
-            <th className="hidden md:table-cell"></th>
-            <th className="px-4 hidden md:table-cell">#</th>
-            <th className="text-left ">Name</th>
-            <th>Price</th>
-            <th>Change</th>
-            <th className="hidden md:table-cell">24h Volume</th>
-            <th className="hidden md:table-cell">Market cap</th>
-            <th>Chart</th>
-          </tr>
-        </thead>
-        <tbody>
-          {coins
-            .filter((value) => {
-              if (searchText === "") {
-                return value;
-              } else if (
-                value.name.toLowerCase().includes(searchText.toLowerCase())
-              ) {
-                return value;
-              }
-            })
-            .slice(0, numToShow)
-            .map((coin) => (
-              <CoinItem key={coin.id} coin={coin} />
-            ))}
-        </tbody>
-      </table>
-
+      </div>{" "}
+      {isLoading ? (
+        <div className="flex justify-center items-center h-96">
+          <h2 className="text-2xl font-bold animate-pulse">Loading...</h2>
+        </div>
+      ) : (
+        <table className="w-full border-collapse text-center">
+          <thead>
+            <tr className=" text-xl font-sans">
+              <th className="hidden md:table-cell"></th>
+              <th className="px-4 hidden md:table-cell">#</th>
+              <th className="text-left ">Name</th>
+              <th>Price</th>
+              <th>Change</th>
+              <th className="hidden md:table-cell">24h Volume</th>
+              <th className="hidden md:table-cell">Market cap</th>
+              <th>Chart</th>
+            </tr>
+          </thead>
+          <tbody>
+            {coins
+              .filter((value) => {
+                if (searchText === "") {
+                  return value;
+                } else if (
+                  value.name.toLowerCase().includes(searchText.toLowerCase())
+                ) {
+                  return value;
+                }
+              })
+              .slice(0, numToShow)
+              .map((coin) => (
+                <CoinItem key={coin.id} coin={coin} />
+              ))}
+          </tbody>
+        </table>
+      )}
       {numToShow < coins.length && (
         <div className="w-full mb-[15px] mx-auto mt-2">
           <button
