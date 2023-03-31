@@ -61,7 +61,7 @@ const CoinItem = ({ coin }) => {
         €{formatValueInBillions(coin.market_cap)}
       </td>
 
-      <td>
+      <td className="hidden md:table-cell">
         <Sparklines data={coin.sparkline_in_7d.price}>
           <SparklinesLine color="orange" />
         </Sparklines>

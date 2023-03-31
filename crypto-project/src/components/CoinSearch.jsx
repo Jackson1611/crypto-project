@@ -46,7 +46,7 @@ const CoinSearch = ({ coins }) => {
               <th>Change</th>
               <th className="hidden md:table-cell">24h Volume</th>
               <th className="hidden md:table-cell">Market cap</th>
-              <th>Chart</th>
+              <th className="hidden md:table-cell">Chart</th>
             </tr>
           </thead>
           <tbody>
