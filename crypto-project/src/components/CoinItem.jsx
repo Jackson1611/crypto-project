@@ -4,8 +4,22 @@ import { Link } from "react-router-dom";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
 const CoinItem = ({ coin }) => {
+  function formatValueInBillions(value) {
+    if (value >= 1000000000) {
+      return `${(value / 1000000000).toFixed(1)}B`;
+    } else if (value > 100000000 && value < 1000000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value > 10000000 && value < 100000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value > 1000000 && value < 10000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else {
+      return `${value.toLocaleString()}`;
+    }
+  }
+
   return (
-    <tr className="h-[80px] border-b overflow-hidden">
+    <tr className="h-[80px]  overflow-hidden">
       <td className="hidden md:table-cell">
         <AiOutlineStar className="ml-2" />
       </td>
@@ -18,36 +32,37 @@ const CoinItem = ({ coin }) => {
               src={coin.image}
               alt={coin.id}
             />
-            <p className="text-lg hidde sm:table-cell font-semi-bold">
-              {coin.name}
-            </p>
+            <p className="text-lg hidde sm:table-cell font-bold">{coin.name}</p>
             <p className="text-lg text-secondary ml-5 hidden md:table-cell">
               {coin.symbol.toUpperCase()}
             </p>
           </div>
         </Link>
       </td>
-      <td className="text-lg">€{coin.current_price.toLocaleString()}</td>
+      <td className="text-lg font-semibold">
+        €{coin.current_price.toLocaleString()}
+      </td>
       <td>
         {coin.price_change_percentage_24h > 0 ? (
-          <p className="text-green-600 text-lg">
+          <p className="text-green-600 text-lg font-semibold">
             {coin.price_change_percentage_24h.toFixed(2)}%
           </p>
         ) : (
-          <p className="text-red-600 text-lg">
+          <p className="text-red-600 text-lg font-semibold">
             {coin.price_change_percentage_24h.toFixed(2)}%
           </p>
         )}
       </td>
-      <td className="w-[180px] hidden md:table-cell ">
-        €{coin.total_volume.toLocaleString()}
+      <td className="w-[180px] hidden md:table-cell">
+        €{formatValueInBillions(coin.total_volume)}
       </td>
       <td className="w-[180px] hidden md:table-cell">
-        €{coin.market_cap.toLocaleString()}
+        €{formatValueInBillions(coin.market_cap)}
       </td>
+
       <td>
         <Sparklines data={coin.sparkline_in_7d.price}>
-          <SparklinesLine color="grey" />
+          <SparklinesLine color="orange" />
         </Sparklines>
       </td>
     </tr>

@@ -10,7 +10,7 @@ const Navbar = () => {
           alt="logo"
           src="https://upload.wikimedia.org/wikipedia/commons/2/23/Eo_circle_blue_letter-c.svg"
         />
-        <h1 className="text-2xl ml-5 text-[#008ae6] ">Basecoin</h1>
+        <h1 className="text-2xl ml-5 text-[#008ae6] font-sans">Basecoin</h1>
       </Link>
       <div>
         <ThemeToggle />

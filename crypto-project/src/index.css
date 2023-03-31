@@ -30,7 +30,7 @@
   --color-bg-button: #2b6cb0;
 }
 /* Import the 'Kanit' font from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
 
 /* Apply the 'Kanit' font to the body element */
 body {
