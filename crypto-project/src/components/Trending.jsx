@@ -13,7 +13,7 @@ const Trending = () => {
   }, []);
 
   return (
-    <div className="rounded-div my-12 py-8 text-primary">
+    <div className="div my-12 text-primary">
       <h1 className="text-2xl font-bold py-4 ml-2 ">New and trending</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {trending.map((coin, idx) => (

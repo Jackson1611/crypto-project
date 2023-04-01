@@ -6,23 +6,23 @@
   @apply bg-primary text-primary;
 }
 
-.rounded-div {
-  @apply border border-secondary rounded-2xl shadow-xl bg-primary px-2 max-w-[1140px] w-full mx-auto;
+.div {
+  @apply border border-secondary shadow-xl bg-primary px-3 max-w-[1200px] w-full mx-auto;
 }
 
 .dark {
-  --color-bg-primary: #1b1b1b;
-  --color-bg-secondary: #283141;
+  --color-bg-primary: #0c0c0c;
+  --color-bg-secondary: #1a1919;
   --color-text-primary: #dbdbdb;
   --color-text-secondary: #8e9297;
-  --color-text-accent: #81e6d9;
+  --color-text-accent: #213634;
   --color-bg-input: #4a5361;
   --color-bg-button: #585858;
 }
 
 .light {
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #eaedf0;
+  --color-bg-primary: #ecececf3;
+  --color-bg-secondary: #d0d7df;
   --color-text-primary: #000000;
   --color-text-secondary: #666b75;
   --color-text-accent: #2b6cb0;

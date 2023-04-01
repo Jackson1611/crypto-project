@@ -18,7 +18,7 @@ const CoinPage = () => {
   }, [url]);
 
   return (
-    <div className="rounded-div my-12 py-8 font-bold">
+    <div className="div my-12  font-bold">
       <div className="flex py-8">
         <img className="w-20 mr-8" src={coin.image?.large} alt="/" />
         <div>

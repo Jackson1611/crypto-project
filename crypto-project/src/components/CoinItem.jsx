@@ -20,11 +20,15 @@ const CoinItem = ({ coin }) => {
   }
 
   return (
-    <tr className="h-[80px]  overflow-hidden">
+    <tr className="h-[80px]  overflow-hidden hover:bg-secondary">
       <td className="hidden md:table-cell">
-        <AiOutlineStar className="ml-2" />
+        <Link to={`/coin/${coin.id}`}>
+          <AiOutlineStar className="ml-2" />
+        </Link>
       </td>
-      <td className="hidden md:table-cell">{coin.market_cap_rank}</td>
+      <td className="hidden md:table-cell">
+        <Link to={`/coin/${coin.id}`}>{coin.market_cap_rank}</Link>
+      </td>
       <td>
         <Link to={`/coin/${coin.id}`}>
           <div className="flex items-center">
@@ -41,23 +45,41 @@ const CoinItem = ({ coin }) => {
         </Link>
       </td>
       <td className="text-lg font-semibold">
-        €{coin.current_price.toLocaleString()}
+        <Link to={`/coin/${coin.id}`}>
+          €{coin.current_price.toLocaleString()}
+        </Link>
       </td>
       <td>
-        {coin.price_change_percentage_24h > 0 ? (
-          <p className="text-green-600 text-lg font-semibold ">
-            {coin.price_change_percentage_24h.toFixed(2)}%
-          </p>
-        ) : (
-          <p className="text-red-600 text-lg font-semibold ">
-            {coin.price_change_percentage_24h.toFixed(2)}%
-          </p>
-        )}
+        <Link to={`/coin/${coin.id}`}>
+          {coin.price_change_percentage_24h > 0 ? (
+            <div className="flex item-center">
+              <div>
+                <p className="text-green-600 text-lg font-semibold ">
+                  {coin.price_change_percentage_24h.toFixed(2)}%
+                </p>
+              </div>
+              <div className="text-xl mt-1 text-green-600">
+                <BiUpArrowAlt />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <div>
+                <p className="text-red-600 text-lg font-semibold ">
+                  {coin.price_change_percentage_24h.toFixed(2)}%
+                </p>
+              </div>
+              <div className="text-xl text-red-600">
+                <BiDownArrowAlt />
+              </div>
+            </div>
+          )}
+        </Link>
       </td>
-      <td className="w-[120px] hidden md:table-cell font-lg">
+      <td className="w-[120px] hidden md:table-cell font-semibold">
         €{formatValueInBillions(coin.total_volume)}
       </td>
-      <td className="w-[120px] hidden md:table-cell font-lg">
+      <td className="w-[120px] hidden md:table-cell font-semibold">
         €{formatValueInBillions(coin.market_cap)}
       </td>
 
