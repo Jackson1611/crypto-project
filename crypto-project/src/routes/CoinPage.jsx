@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Sparklines, SparklinesLine } from "react-sparklines";
 import DOMPurify from "dompurify";
 import { useParams } from "react-router-dom";
-
+import { Line } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 const CoinPage = () => {
   const [coin, setCoin] = useState({});
   const params = useParams();
@@ -13,12 +13,59 @@ const CoinPage = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setCoin(response.data);
-      console.log(response.data);
+      console.log(response.data.market_data?.sparkline_7d.price);
     });
   }, [url]);
 
+  const labels = [];
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  for (let day = 0; day < 7; day++) {
+    for (let hour = 0; hour < 24; hour++) {
+      labels.push(`${daysOfWeek[day]} ${hour}:00`);
+    }
+  }
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Price",
+        data: coin.market_data?.sparkline_7d.price,
+        fill: false,
+        borderColor: "#5c5cd6",
+        tension: 0.4,
+        pointRadius: 0,
+        pointHoverRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: {
+          display: false,
+        },
+      },
+      y: { grid: { display: false } },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   return (
-    <div className="div my-12  font-bold">
+    <div className="div-coin my-12  font-bold ">
       <div className="flex py-8">
         <img className="w-20 mr-8" src={coin.image?.large} alt="/" />
         <div>
@@ -27,8 +74,8 @@ const CoinPage = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <div>
+      <div>
+        <div className="">
           <div className="flex justify-between">
             {coin.market_data?.current_price ? (
               <p className="text-3xl font-bold">
@@ -37,20 +84,96 @@ const CoinPage = () => {
             ) : null}
             <p>7 Day</p>
           </div>
+          <div className="mb-7 mt-5">
+            <Line data={data} options={options} />
+          </div>
           <div>
-            <Sparklines data={coin.market_data?.sparkline_7d.price}>
-              <SparklinesLine color="#6666ff" />
-            </Sparklines>
+            <p className="text-xl font-bold">Market Stats</p>
+            <div className="flex justify-between py-4">
+              <div>
+                <p className="text-gray-500 text-sm">Popularity</p>#
+                {coin.market_cap_rank}
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm ">Hashing Algorithm</p>
+                {coin.hashing_algorithm ? (
+                  <p>{coin.hashing_algorithm}</p>
+                ) : null}
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm">Trust Score</p>
+                {coin.tickers ? (
+                  <p className="text-right">
+                    {coin.liquidity_score.toFixed(2)}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="flex justify-between py-4">
+              <div>
+                <p className="text-gray-500 text-sm">Price Change (24h)</p>
+                {coin.market_data ? (
+                  <p>
+                    {coin.market_data.price_change_percentage_24h.toFixed(2)}%
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm">Price Change (7d)</p>
+                {coin.market_data ? (
+                  <p>
+                    {coin.market_data.price_change_percentage_7d.toFixed(2)}%
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm ">Price Change (14d)</p>
+                {coin.market_data ? (
+                  <p className="text-right">
+                    {coin.market_data.price_change_percentage_14d.toFixed(2)}%
+                  </p>
+                ) : null}
+              </div>
+            </div>
+            <div className="flex justify-between py-4">
+              <div>
+                <p className="text-gray-500 text-sm">Price Change (30d)</p>
+                {coin.market_data ? (
+                  <p>
+                    {coin.market_data.price_change_percentage_30d.toFixed(2)}%
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm ">Price Change (60d)</p>
+                {coin.market_data ? (
+                  <p>
+                    {coin.market_data.price_change_percentage_60d.toFixed(2)}%
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm text-right">
+                  Price Change (1y)
+                </p>
+                {coin.market_data ? (
+                  <p className="text-right">
+                    {coin.market_data.price_change_percentage_1y.toFixed(2)}%
+                  </p>
+                ) : null}
+              </div>
+            </div>
           </div>
           <div className="flex justify-between py-4">
             <div>
-              <p className="text-gray-500 text-sm">Market Cap</p>
+              <p className="text-gray-500 text-sm ">Market Cap</p>
               {coin.market_data?.market_cap ? (
                 <p>${coin.market_data.market_cap.usd.toLocaleString()}</p>
               ) : null}
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Volume (24h)</p>
+              <p className="text-gray-500 text-sm text-right">Volume (24h)</p>
               {coin.market_data?.market_cap ? (
                 <p>${coin.market_data.total_volume.usd.toLocaleString()}</p>
               ) : null}
@@ -72,77 +195,10 @@ const CoinPage = () => {
             </div>
           </div>
         </div>
-
-        <div>
-          <p className="text-xl font-bold">Market Stats</p>
-          <div className="flex justify-between py-4">
-            <div>
-              <p className="text-gray-500 text-sm">Market Rank</p>
-              {coin.market_cap_rank}
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Hashing Algorithm</p>
-              {coin.hashing_algorithm ? <p>{coin.hashing_algorithm}</p> : null}
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Trust Score</p>
-              {coin.tickers ? <p>{coin.liquidity_score.toFixed(2)}</p> : null}
-            </div>
-          </div>
-
-          <div className="flex justify-between py-4">
-            <div>
-              <p className="text-gray-500 text-sm">Price Change (24h)</p>
-              {coin.market_data ? (
-                <p>
-                  {coin.market_data.price_change_percentage_24h.toFixed(2)}%
-                </p>
-              ) : null}
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Price Change (7d)</p>
-              {coin.market_data ? (
-                <p>{coin.market_data.price_change_percentage_7d.toFixed(2)}%</p>
-              ) : null}
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Price Change (14d)</p>
-              {coin.market_data ? (
-                <p>
-                  {coin.market_data.price_change_percentage_14d.toFixed(2)}%
-                </p>
-              ) : null}
-            </div>
-          </div>
-          <div className="flex justify-between py-4">
-            <div>
-              <p className="text-gray-500 text-sm">Price Change (30d)</p>
-              {coin.market_data ? (
-                <p>
-                  {coin.market_data.price_change_percentage_30d.toFixed(2)}%
-                </p>
-              ) : null}
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Price Change (60d)</p>
-              {coin.market_data ? (
-                <p>
-                  {coin.market_data.price_change_percentage_60d.toFixed(2)}%
-                </p>
-              ) : null}
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Price Change (1y)</p>
-              {coin.market_data ? (
-                <p>{coin.market_data.price_change_percentage_1y.toFixed(2)}%</p>
-              ) : null}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Description */}
-      <div className="py-4 ">
+      <div className="py-4  px-2">
         <p className="text-xl font-bold">About {coin.name}</p>
         <p
           className="font-semibold  text-gray-500"

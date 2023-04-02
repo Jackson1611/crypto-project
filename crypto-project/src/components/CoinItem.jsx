@@ -18,14 +18,10 @@ const CoinItem = ({ coin }) => {
       return `${value.toLocaleString()}`;
     }
   }
+  const colors = ["#cc00ff", "#ff8c1a", "#0066ff", "#ff6666"];
 
   return (
-    <tr className="h-[80px]  overflow-hidden hover:bg-secondary">
-      <td className="hidden md:table-cell">
-        <Link to={`/coin/${coin.id}`}>
-          <AiOutlineStar className="ml-2" />
-        </Link>
-      </td>
+    <tr className="h-[80px] overflow-hidden hover:bg-secondary">
       <td className="hidden md:table-cell">
         <Link to={`/coin/${coin.id}`}>{coin.market_cap_rank}</Link>
       </td>
@@ -52,7 +48,7 @@ const CoinItem = ({ coin }) => {
       <td>
         <Link to={`/coin/${coin.id}`}>
           {coin.price_change_percentage_24h > 0 ? (
-            <div className="flex item-center">
+            <div className="flex item-center ml-[65px]">
               <div>
                 <p className="text-green-600 text-lg font-semibold ">
                   {coin.price_change_percentage_24h.toFixed(2)}%
@@ -63,7 +59,7 @@ const CoinItem = ({ coin }) => {
               </div>
             </div>
           ) : (
-            <div className="flex items-center">
+            <div className="flex items-center ml-[60px]">
               <div>
                 <p className="text-red-600 text-lg font-semibold ">
                   {coin.price_change_percentage_24h.toFixed(2)}%
@@ -76,16 +72,18 @@ const CoinItem = ({ coin }) => {
           )}
         </Link>
       </td>
-      <td className="w-[120px] hidden md:table-cell font-semibold">
+      <td className=" hidden md:table-cell font-semibold">
         €{formatValueInBillions(coin.total_volume)}
       </td>
-      <td className="w-[120px] hidden md:table-cell font-semibold">
+      <td className=" hidden md:table-cell font-semibold">
         €{formatValueInBillions(coin.market_cap)}
       </td>
 
-      <td className="hidden md:table-cell">
+      <td className=" w-[130px] hidden md:table-cell">
         <Sparklines data={coin.sparkline_in_7d.price}>
-          <SparklinesLine color="orange" />
+          <SparklinesLine
+            color={colors[Math.floor(Math.random() * colors.length)]}
+          />
         </Sparklines>
       </td>
     </tr>
