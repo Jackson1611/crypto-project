@@ -45,27 +45,34 @@ const CoinItem = ({ coin }) => {
           €{coin.current_price.toLocaleString()}
         </Link>
       </td>
+      <td className=" w-[100px] hidden md:table-cell">
+        <Sparklines data={coin.sparkline_in_7d.price}>
+          <SparklinesLine
+            color={colors[Math.floor(Math.random() * colors.length)]}
+          />
+        </Sparklines>
+      </td>
       <td>
         <Link to={`/coin/${coin.id}`}>
           {coin.price_change_percentage_24h > 0 ? (
             <div className="flex item-center ml-[65px]">
               <div>
-                <p className="text-green-600 text-lg font-semibold ">
+                <p className="text-green-500 text-lg font-semibold ">
                   {coin.price_change_percentage_24h.toFixed(2)}%
                 </p>
               </div>
-              <div className="text-xl mt-1 text-green-600">
+              <div className="text-xl mt-1 text-green-500">
                 <BiUpArrowAlt />
               </div>
             </div>
           ) : (
             <div className="flex items-center ml-[60px]">
               <div>
-                <p className="text-red-600 text-lg font-semibold ">
+                <p className="text-red-500 text-lg font-semibold ">
                   {coin.price_change_percentage_24h.toFixed(2)}%
                 </p>
               </div>
-              <div className="text-xl text-red-600">
+              <div className="text-xl text-red-500">
                 <BiDownArrowAlt />
               </div>
             </div>
@@ -77,14 +84,6 @@ const CoinItem = ({ coin }) => {
       </td>
       <td className=" hidden md:table-cell font-semibold">
         €{formatValueInBillions(coin.market_cap)}
-      </td>
-
-      <td className=" w-[130px] hidden md:table-cell">
-        <Sparklines data={coin.sparkline_in_7d.price}>
-          <SparklinesLine
-            color={colors[Math.floor(Math.random() * colors.length)]}
-          />
-        </Sparklines>
       </td>
     </tr>
   );

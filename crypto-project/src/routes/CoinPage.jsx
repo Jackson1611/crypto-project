@@ -13,7 +13,7 @@ const CoinPage = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setCoin(response.data);
-      console.log(response.data.market_data?.sparkline_7d.price);
+      console.log(response.data);
     });
   }, [url]);
 
@@ -65,17 +65,30 @@ const CoinPage = () => {
   };
 
   return (
-    <div className="div-coin my-12  font-bold ">
-      <div className="flex py-8">
+    <div className="div-coin my-4  font-bold ">
+      <div className="flex py-8 px-2">
         <img className="w-20 mr-8" src={coin.image?.large} alt="/" />
         <div>
-          <p className="text-3xl font-bold">{coin?.name}</p>
+          <div className="flex items-center ">
+            <p className="text-3xl font-bold">{coin?.name} </p>
+            {coin.market_data ? (
+              coin.market_data.price_change_percentage_24h > 0 ? (
+                <p className="ml-4 text-xl text-green-500">
+                  {coin.market_data.price_change_percentage_24h.toFixed(2)}%
+                </p>
+              ) : (
+                <p className="ml-4 text-xl text-red-500">
+                  {coin.market_data.price_change_percentage_24h.toFixed(2)}%
+                </p>
+              )
+            ) : null}
+          </div>
           <p>({coin.symbol?.toUpperCase()} / EUR)</p>
         </div>
       </div>
 
       <div>
-        <div className="">
+        <div>
           <div className="flex justify-between">
             {coin.market_data?.current_price ? (
               <p className="text-3xl font-bold">
@@ -175,7 +188,9 @@ const CoinPage = () => {
             <div>
               <p className="text-gray-500 text-sm text-right">Volume (24h)</p>
               {coin.market_data?.market_cap ? (
-                <p>${coin.market_data.total_volume.usd.toLocaleString()}</p>
+                <p className="text-right">
+                  ${coin.market_data.total_volume.usd.toLocaleString()}
+                </p>
               ) : null}
             </div>
           </div>
