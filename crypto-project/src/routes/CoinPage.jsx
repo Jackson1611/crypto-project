@@ -32,6 +32,7 @@ const CoinPage = () => {
       labels.push(`${daysOfWeek[day]} ${hour}:00`);
     }
   }
+  
   const data = {
     labels: labels,
     datasets: [
